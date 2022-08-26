@@ -1,0 +1,107 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int randvet()
+{
+    int i;
+    int vet[1000];
+    for(i=0;i<1000;i++)
+        vet[i]=rand();
+    return vet[1000];
+}
+void printvet(int vet[],int n)
+{
+    int i;
+        for(i=0;i<n;i++)
+            printf("[%d] %d, ", i,vet[i]);
+}
+void BubbleSort(int vet[],int n)
+{
+    printf("\n");
+    for (int i = 0 ; i < n - 1; i++)
+    {
+        for (int j = 0 ; j < n - i - 1; j++)     //n é o tamanho do array
+        {
+            if (vet[j] > vet[j+1])      // Para o uso com ordem decrescente
+            {
+                int swap   = vet[j];
+                vet[j]   = vet[j+1];
+                vet[j+1] = swap;
+            }
+        }
+    }
+printvet(vet,1000);
+
+}
+void swap(int* a, int* b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+int partition (int vet[], int low, int high)
+{
+    int pivot = vet[high];
+    int i = (low - 1);
+
+    for (int j = low; j <= high- 1; j++)
+    {
+        if (vet[j] <= pivot)
+        {
+            i++;
+            swap(&vet[i], &vet[j]);
+        }
+    }
+    swap(&vet[i + 1], &vet[high]);
+    return (i + 1);
+}
+void quickSort(int vet[], int low, int high)
+{
+    if (low < high)
+    {
+        int pi = partition(vet, low, high);
+
+        quickSort(vet, low, pi - 1);
+        quickSort(vet, pi + 1, high);
+    }
+}
+void mediavet(int vet[],int n)
+{
+    int i, med=vet[0];
+    for(i=1;i<n;i++)
+        med=(med+vet[i])/n;
+    printf("\nMedia: %d", med);
+}
+void Mvet(int vet[], int n)
+{
+    int i,M=vet[0];
+    for(i=1;i<n;i++)
+    {
+        if(vet[i]>M)
+            M=vet[i];
+    }
+    printf("\nMaior valor presente no vetor: %d", M);
+}
+void mvet(int vet[],int n)
+{
+        int i,m=vet[0];
+    for(i=1;i<n;i++)
+    {
+        if(vet[i]<m)
+            m=vet[i];
+    }
+    printf("\nMenor valor presente no vetor: %d", m);
+}
+int main()
+{
+    int vet[1000];
+    vet[1000]=randvet();
+    BubbleSort(vet,1000);
+    int n=sizeof(vet)/sizeof(vet[0]);
+    quickSort(vet,0,n-1);
+    printvet(vet,1000);
+    mediavet(vet,1000);
+    Mvet(vet,1000);
+    mvet(vet,1000);
+    return 0;
+}
